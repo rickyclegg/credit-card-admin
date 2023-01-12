@@ -27,7 +27,7 @@ export default function Home() {
           <input type="submit" value="Add"/>
         </form>
         <h2>Existing Cards</h2>
-        <p>No cards in the system</p>
+        <p data-testid="no-cards-warning">No cards in the system</p>
       </main>
     </>
   )
