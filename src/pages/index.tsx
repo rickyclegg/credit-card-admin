@@ -14,19 +14,20 @@ export default function Home() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<FormValues>()
-  const [cards, setCards] = React.useState<CreditCard[]>([])
+  const [cards, setCards] = React.useState<CreditCard[] | null>()
 
   const onSubmit: SubmitHandler<FormValues> = (data) => {
     const newCards: CreditCard[] = [
-      ...cards,
+      ...(cards ?? []),
       { name: data.addName, cardNumber: data.addCardNumber, limit: data.addLimit, balance: 0 },
     ]
 
     setCards(newCards)
   }
+
+  React.useEffect(() => setCards([]), [])
 
   return (
     <>
@@ -55,8 +56,9 @@ export default function Home() {
           <input type="submit" value="Add" />
         </form>
         <h2>Existing Cards</h2>
-        {!cards.length && <p data-testid="no-cards-warning">No cards in the system</p>}
-        {cards.length > 0 && (
+        {!cards && <p data-testid="loadingCards">Loading cards...</p>}
+        {cards && !cards.length && <p data-testid="no-cards-warning">No cards in the system</p>}
+        {cards && cards.length > 0 && (
           <table id="cardsTable">
             <tr>
               <th>Name</th>
@@ -65,7 +67,7 @@ export default function Home() {
               <th>Limit</th>
             </tr>
             {cards.map((card) => (
-              <tr>
+              <tr key={card.cardNumber}>
                 <td data-testid="cardName">{card.name}</td>
                 <td data-testid="cardNumber">{card.cardNumber}</td>
                 <td data-testid="cardBalance">£{card.balance}</td>

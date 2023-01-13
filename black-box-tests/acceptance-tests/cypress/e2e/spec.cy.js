@@ -2,7 +2,13 @@ describe('template spec', () => {
   const getNoCardsWarning = () => cy.get('[data-testid="no-cards-warning"]')
   const getCardRow = (value) => cy.get('#cardsTable tr').eq(value)
   const getAddFormField = (name) => cy.get(`input[name=${name}]`)
-  const getByTestId = (el, id) => el.get(`[data-testid="${id}"]`)
+  const getByTestId = (id, el) => (el ? el : cy).get(`[data-testid="${id}"]`)
+
+  it('shows loading cards message on startup', () => {
+    cy.visit('/')
+
+    getByTestId('loadingCards')
+  })
 
   it('has no credit cards when starting', () => {
     cy.visit('/')
@@ -25,9 +31,9 @@ describe('template spec', () => {
 
     const newCardRow = getCardRow(1)
 
-    getByTestId(newCardRow, 'cardName').contains(expectedName)
-    getByTestId(newCardRow, 'cardNumber').contains(expectedCardNum)
-    getByTestId(newCardRow, 'cardLimit').contains(`£${expectedLimit}`)
-    getByTestId(newCardRow, 'cardBalance').contains(`£${expectedBalance}`)
+    getByTestId('cardName', newCardRow).contains(expectedName)
+    getByTestId('cardNumber', newCardRow).contains(expectedCardNum)
+    getByTestId('cardLimit', newCardRow).contains(`£${expectedLimit}`)
+    getByTestId('cardBalance', newCardRow).contains(`£${expectedBalance}`)
   })
 })
