@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:e2e": "cd black-box-tests/acceptance-tests && cypress run && cd ../../"
+    "test:e2e": "cd black-box-tests/acceptance-tests && cypress run && cd ../../",
+    "test:unit": "jest",
+    "test": "npm run test:unit && npm run test:e2e"
   },
   "dependencies": {
     "@next/font": "13.1.1",
