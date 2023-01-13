@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { CreditCard } from '../../src/model/credit-card'
-import MemCardsStore from '../../src/store/cards-store'
-import { Store } from '../../src/store/types'
+import { CreditCard } from '../../model/credit-card'
+import MemCardsStore from '../../store/cards-store'
+import { Store } from '../../store/types'
 
 type Data = {
   data: CreditCard[] | CreditCard['cardNumber']

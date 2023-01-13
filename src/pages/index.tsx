@@ -1,8 +1,8 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import styles from '../../styles/Home.module.css'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { CreditCard } from '../src/model/credit-card'
+import { CreditCard } from '../model/credit-card'
 
 type FormValues = {
   addName: string
@@ -56,20 +56,24 @@ export default function Home() {
         </form>
         <h2>Existing Cards</h2>
         {!cards.length && <p data-testid="no-cards-warning">No cards in the system</p>}
-        {cards.length > 0 && <table id="cardsTable">
-          <tr>
-            <th>Name</th>
-            <th>Card Number</th>
-            <th>Balance</th>
-            <th>Limit</th>
-          </tr>
-          {cards.map((card) => <tr>
-            <td data-testid="cardName">{card.name}</td>
-            <td data-testid="cardNumber">{card.cardNumber}</td>
-            <td data-testid="cardBalance">£{card.balance}</td>
-            <td data-testid="cardLimit">£{card.limit}</td>
-          </tr>)}
-        </table>}
+        {cards.length > 0 && (
+          <table id="cardsTable">
+            <tr>
+              <th>Name</th>
+              <th>Card Number</th>
+              <th>Balance</th>
+              <th>Limit</th>
+            </tr>
+            {cards.map((card) => (
+              <tr>
+                <td data-testid="cardName">{card.name}</td>
+                <td data-testid="cardNumber">{card.cardNumber}</td>
+                <td data-testid="cardBalance">£{card.balance}</td>
+                <td data-testid="cardLimit">£{card.limit}</td>
+              </tr>
+            ))}
+          </table>
+        )}
       </main>
     </>
   )

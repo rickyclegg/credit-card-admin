@@ -1,5 +1,5 @@
 import { createMocks } from 'node-mocks-http'
-import { handleCards } from '../../pages/api/cards'
+import { handleCards } from '../../src/pages/api/cards'
 import { CreditCard, CreditCardDTO } from '../../src/model/credit-card'
 import { Store } from '../../src/store/types'
 
