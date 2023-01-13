@@ -2,10 +2,40 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
+import React from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-const inter = Inter({ subsets: ['latin'] })
+type FormValues = {
+  addName: string
+  addCardNumber: string
+  addLimit: number
+}
+
+type CreditCard = {
+  name: string
+  cardNumber: string
+  limit: number
+  balance: number
+}
 
 export default function Home() {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormValues>()
+  const [cards, setCards] = React.useState<CreditCard[]>([])
+
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    const newCards: CreditCard[] = [
+      ...cards,
+      { name: data.addName, cardNumber: data.addCardNumber, limit: data.addLimit, balance: 0 },
+    ]
+
+    setCards(newCards)
+  }
+
   return (
     <>
       <Head>
@@ -17,17 +47,37 @@ export default function Home() {
       <main className={styles.main}>
         <h1>Credit Card System</h1>
         <h2>Add</h2>
-        <form>
-          <label htmlFor="name">Name</label>
-          <input type="text" id="name" name="name"/>
-          <label htmlFor="cardNumber">Card number</label>
-          <input type="text" id="cardNumber" name="cardNumber"/>
-          <label htmlFor="limit">Limit</label>
-          <input type="text" id="limit" name="limit"/>
-          <input type="submit" value="Add"/>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <label>Name</label>
+          <input {...register('addName', { required: true })} />
+          {errors.addName && <span>This field is required</span>}
+
+          <label>Card number</label>
+          <input {...register('addCardNumber', { required: true })} />
+          {errors.addCardNumber && <span>This field is required</span>}
+
+          <label>Limit</label>
+          <input {...register('addLimit', { required: true })} />
+          {errors.addLimit && <span>This field is required</span>}
+
+          <input type="submit" value="Add" />
         </form>
         <h2>Existing Cards</h2>
-        <p data-testid="no-cards-warning">No cards in the system</p>
+        {!cards.length && <p data-testid="no-cards-warning">No cards in the system</p>}
+        {cards.length > 0 && <table id="cardsTable">
+          <tr>
+            <th>Name</th>
+            <th>Card Number</th>
+            <th>Balance</th>
+            <th>Limit</th>
+          </tr>
+          {cards.map((card) => <tr>
+            <td data-testid="cardName">{card.name}</td>
+            <td data-testid="cardNumber">{card.cardNumber}</td>
+            <td data-testid="cardBalance">£{card.balance}</td>
+            <td data-testid="cardLimit">£{card.limit}</td>
+          </tr>)}
+        </table>}
       </main>
     </>
   )
