@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import styles from '../../styles/Home.module.css'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { CreditCard } from '../model/credit-card'
 
@@ -16,18 +16,38 @@ export default function Home() {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>()
-  const [cards, setCards] = React.useState<CreditCard[] | null>()
+  const [cards, setCards] = useState<CreditCard[] | null>()
 
-  const onSubmit: SubmitHandler<FormValues> = (data) => {
-    const newCards: CreditCard[] = [
-      ...(cards ?? []),
-      { name: data.addName, cardNumber: data.addCardNumber, limit: data.addLimit, balance: 0 },
-    ]
-
-    setCards(newCards)
+  const refreshCards = () => {
+    fetch('/api/cards')
+      .then((res) => res.json())
+      .then((data) => {
+        setCards(data.data)
+      })
   }
 
-  React.useEffect(() => setCards([]), [])
+  const onSubmit: SubmitHandler<FormValues> = (data) => {
+    fetch('/api/cards', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        card: {
+          name: data.addName,
+          cardNumber: data.addCardNumber,
+          limit: data.addLimit,
+          balance: 0,
+        },
+      }),
+    }).then(() => {
+      refreshCards()
+    })
+  }
+
+  useEffect(() => {
+    refreshCards()
+  }, [])
 
   return (
     <>

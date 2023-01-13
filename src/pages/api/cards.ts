@@ -7,6 +7,8 @@ type Data = {
   data: CreditCard[] | CreditCard['cardNumber']
 }
 
+const inMemoryStore = new MemCardsStore()
+
 export const handleCards = async (req: NextApiRequest, res: NextApiResponse<Data>, store: Store<CreditCard>) => {
   if (req.method === 'GET') {
     return res.status(200).json({ data: await store.getAll() })
@@ -20,5 +22,5 @@ export const handleCards = async (req: NextApiRequest, res: NextApiResponse<Data
 }
 
 export default function handler(req: NextApiRequest, res: NextApiResponse<Data>) {
-  return handleCards(req, res, new MemCardsStore())
+  return handleCards(req, res, inMemoryStore)
 }
