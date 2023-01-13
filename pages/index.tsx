@@ -1,21 +1,13 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
 import styles from '../styles/Home.module.css'
 import React from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { CreditCard } from '../src/model/credit-card'
 
 type FormValues = {
   addName: string
   addCardNumber: string
   addLimit: number
-}
-
-type CreditCard = {
-  name: string
-  cardNumber: string
-  limit: number
-  balance: number
 }
 
 export default function Home() {
