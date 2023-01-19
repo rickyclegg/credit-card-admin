@@ -1,5 +1,5 @@
-export default function isValid(val: string) {
-  const numbers = val
+export default function isValid(val: string | number) {
+    const numbers = String(val)
     .split('')
     .reverse()
     .map((n) => parseInt(n, 10))

@@ -9,5 +9,9 @@ describe('validating credit card numbers', () => {
         it('should allow a valid number as string', () => {
             expect(isValid('4485275742308327')).toBeTruthy()
         })
+
+        it('should allow a valid number as number', () => {
+            expect(isValid(4485275742308327)).toBeTruthy()
+        })
     })
 })
