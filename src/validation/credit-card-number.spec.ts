@@ -5,5 +5,9 @@ describe('validating credit card numbers', () => {
         it('should only contian numbers', () => {
             expect(isValid("ABC")).toBeFalsy()
         })
+
+        it('should allow a valid number as string', () => {
+            expect(isValid('4485275742308327')).toBeTruthy()
+        })
     })
 })
