@@ -28,7 +28,6 @@ A pretty poor attempt, but I just did have the time with interviews and family l
 
 ## Where I was going if I had time
 
-* TDD an isomorphic function for validating the credit card with Luhn 10.
 * TDD a CardService class wrapping the store to perform validation. Use the validation at the boundaries.
 * Add another Cypress test for adding several cards and no duplicates. And drive that functionality in the form validation and the backend.
 * Add loading/blocker for when adding a new card.
@@ -48,6 +47,11 @@ Feel free to follow my commits through to see who I progressed through the task.
 NOTE: There is currently no clean up, so you have to restart the site when before running the tests.
 
 ## Running the app
+
+The app was created on Node v18.
+To specify the node version I used NVM which you may need to install it. You can then run either `nvm use` or `nvm istall`.
+
+Then
 
 ```bash
 npm ci
