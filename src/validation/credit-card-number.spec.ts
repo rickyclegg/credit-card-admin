@@ -21,5 +21,9 @@ describe('validating credit card numbers', () => {
         it('should allow a valid a formatted card number', () => {
             expect(isValid('4485 2757 4230 8327')).toBeTruthy()
         })
+
+        it('should allow a valid amex card number', () => {
+            expect(isValid('3774 001111 11115')).toBeTruthy()
+        })
     })
 })
