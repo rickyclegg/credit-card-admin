@@ -6,6 +6,10 @@ describe('validating credit card numbers', () => {
             expect(isValid("ABC")).toBeFalsy()
         })
 
+        it('should return false for an invalid number', () => {
+            expect(isValid(6011329933655299)).toBeFalsy()
+        })
+
         it('should allow a valid number as string', () => {
             expect(isValid('4485275742308327')).toBeTruthy()
         })
