@@ -1,8 +1,9 @@
 export default function isValid(val: string | number) {
     const numbers = String(val)
     .split('')
+    .filter(n => n !== ' ')
     .reverse()
-    .map((n) => parseInt(n, 10))
+    .map(n => parseInt(n, 10))
 
   const lasNum = numbers.shift() as number
 
